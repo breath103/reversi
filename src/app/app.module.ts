@@ -27,7 +27,6 @@ import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
-import { XLargeDirective } from './home/x-large';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -54,7 +53,6 @@ type StoreType = {
     AboutComponent,
     HomeComponent,
     NoContentComponent,
-    XLargeDirective
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -62,13 +60,14 @@ type StoreType = {
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  providers: [ 
+    // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS
   ]
 })
-export class AppModule {
 
+export class AppModule {
   constructor(
     public appRef: ApplicationRef,
     public appState: AppState
