@@ -35,15 +35,9 @@ import { AppState } from './app.service';
         About
       </a>
     </nav>
-
     <main>
       <router-outlet></router-outlet>
     </main>
-
-    <footer>
-      <pre class="app-state">this.appState.state = {{ appState.state | json }}</pre>
-      <small>@Sympathique - Shortener</small>
-    </footer>
   `
 })
 export class AppComponent {

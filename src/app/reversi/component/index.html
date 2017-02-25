@@ -1,0 +1,28 @@
+<div>
+  <h1>Reversi</h1>
+  <div 
+    class="board"
+    (mousemove)="onHoverBoard($event)"
+  >
+    <div 
+      class="hover-cell"
+      *ngIf="!!mouse"
+      [ngStyle]="{'left.px': mouse.x, 'top.px': mouse.y}"
+    >
+      <div 
+        class="checker"
+        [ngClass]="{'checker-white': currentPlayer == true, 'checker-black': currentPlayer == false }"
+      ></div>
+    </div>
+    <div 
+      *ngFor="let loc of boardLocations; trackBy:trackByLocation"
+      class="cell"
+      (click)="onClickCell(loc)"
+    > 
+      <div 
+        class="checker"
+        [ngClass]="{'checker-white': reversi.get(loc) == true, 'checker-black': reversi.get(loc) == false }"
+      ></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.board {
+    display: flex;
+    flex-flow: row wrap;
+    border: 1px solid black;
+    position: relative;
+}
+
+.cell {
+    border: 1px solid black;
+    display: flex;
+    width: 10%;
+    height: 50px;    
+    margin: auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.hover-cell {
+    opacity: 0.3;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    margin: auto;
+    position: absolute;
+    transition: left 0.1s, top 0.1s;
+    transform: translate(-50%, -50%);
+    /*z-index: 100;*/
+}
+
+.checker {
+    opacity: 0;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    border-radius: 50%;
+    border: 3px solid black;
+    
+    transition: all 0.2s;
+    background-color: transparent;
+}
+
+.checker.checker-white {
+    opacity: 1;
+    background-color: white;
+}
+
+.checker.checker-black {
+    opacity: 1;
+    background-color: black;
+}

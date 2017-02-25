@@ -25,6 +25,7 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
+import { ReversiComponent } from './reversi';
 import { AboutComponent } from './about';
 import { NoContentComponent } from './no-content';
 
@@ -52,6 +53,7 @@ type StoreType = {
     AppComponent,
     AboutComponent,
     HomeComponent,
+    ReversiComponent,
     NoContentComponent,
   ],
   imports: [ // import Angular's modules
