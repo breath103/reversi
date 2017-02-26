@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgFor } from '@angular/common';
 
 import { Http, Response } from '@angular/http';
@@ -20,28 +17,10 @@ import { AppState } from '../app.service';
   templateUrl: './home.component.html'
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   // Set our default values
   public localState = { value: '' };
-  public shorteners = [];
 
   // TypeScript public modifiers
-  constructor(
-    private http: Http,
-    public appState: AppState,
-  ) {}
-
-  public ngOnInit() {
-    this.http
-        .get("https://1u8e6hia8a.execute-api.us-east-1.amazonaws.com/prod/api/shorteners.json")
-        .subscribe((response) => {
-          const data = response.json();
-          this.shorteners = data.Items;
-        });
-  }
-
-  public submitState(value: string) {
-    this.appState.set('value', value);
-    this.localState.value = '';
-  }
+  constructor() {}
 }

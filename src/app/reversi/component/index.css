@@ -1,50 +1,122 @@
-.board {
-    display: flex;
-    flex-flow: row wrap;
-    border: 1px solid black;
-    position: relative;
-}
-
-.cell {
-    border: 1px solid black;
-    display: flex;
-    width: 10%;
-    height: 50px;    
-    margin: auto;
-    box-sizing: border-box;
+.title {
     text-align: center;
 }
 
-.hover-cell {
-    opacity: 0.3;
-    width: 50px;
-    height: 50px;
+.layoutContainer {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.scoreBoard {
+    display: inline-flex;
+    flex-flow: column wrap;
+    justify-content: center;
+}
+.scoreBoard > .score {
+    display: flex;
+    text-align: center;
+    width: 85px;
+    height: 100px;
+    border-radius: 8px;
+    margin: 5px 10px;
+}
+.scoreBoard > .score.scoreWhite { 
+    background-color: #F48120;
+    color: #F48120;
+}
+.scoreBoard > .score.scoreBlack {
+    background-color: rgb(0, 146, 200);
+    color: rgb(0, 146, 200);
+}
+
+.scoreBoard > .score > .content {
+    width: 88%;
+    height: 92%;
+    margin: auto;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 5px;
+    padding-top: 8px;
+    font-size: 55px;
+}
+
+.board {
+    position: relative;
+    display: inline-block;
+}
+
+.board > .row {
     display: flex;
     margin: auto;
-    position: absolute;
-    transition: left 0.1s, top 0.1s;
-    transform: translate(-50%, -50%);
-    /*z-index: 100;*/
 }
 
-.checker {
+.board.ai-board {
+
+}
+.board.ai-board .cell {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+.resultModal {
     opacity: 0;
-    width: 80%;
-    height: 80%;
+    transition: opacity 1s;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.79);
+}
+
+.resultModal.show {
+    opacity: 1;
+}
+
+.resultModal.hide {
+    opacity: 0;
+}
+
+.resultModal > .modalContent {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;    
+}
+
+.resultModal > .modalContent > .scoreBoard {
+    display: inline-flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+.resultModal > .modalContent > .scoreBoard > .score {
+    display: flex;
+    text-align: center;
+    width: 85px;
+    height: 100px;
+    border-radius: 8px;
+    margin: 5px 10px;
+}
+.resultModal > .modalContent > .scoreBoard > .score.scoreWhite { 
+    background-color: #F48120;
+    color: #F48120;
+}
+.resultModal > .modalContent > .scoreBoard > .score.scoreBlack {
+    background-color: rgb(0, 146, 200);
+    color: rgb(0, 146, 200);
+}
+
+.resultModal > .modalContent > .scoreBoard > .score > .content {
+    width: 88%;
+    height: 92%;
     margin: auto;
-    border-radius: 50%;
-    border: 3px solid black;
-    
-    transition: all 0.2s;
-    background-color: transparent;
-}
-
-.checker.checker-white {
-    opacity: 1;
+    box-sizing: border-box;
     background-color: white;
-}
-
-.checker.checker-black {
-    opacity: 1;
-    background-color: black;
+    border-radius: 5px;
+    padding-top: 8px;
+    font-size: 55px;
 }

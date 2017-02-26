@@ -1,28 +1,66 @@
 <div>
-  <h1>Reversi</h1>
-  <div 
-    class="board"
-    (mousemove)="onHoverBoard($event)"
-  >
-    <div 
-      class="hover-cell"
-      *ngIf="!!mouse"
-      [ngStyle]="{'left.px': mouse.x, 'top.px': mouse.y}"
-    >
-      <div 
-        class="checker"
-        [ngClass]="{'checker-white': currentPlayer == true, 'checker-black': currentPlayer == false }"
-      ></div>
+  <h1 class="title">Reversi</h1>
+  <div class="layoutContainer">
+    <div class="board">
+      <div class="row"
+            *ngFor="let rows of boardLocations">
+        <div *ngFor="let loc of rows; trackBy:trackByLocation"> 
+          <checker [location]="loc" 
+                  [checker]="reversi.get(loc)" 
+                  [possibleMove]="reversi.possibleMoves[loc]"
+                  (onClick)="onClickCell($event)"
+          ></checker>
+        </div>
+      </div>
     </div>
-    <div 
-      *ngFor="let loc of boardLocations; trackBy:trackByLocation"
-      class="cell"
-      (click)="onClickCell(loc)"
-    > 
-      <div 
-        class="checker"
-        [ngClass]="{'checker-white': reversi.get(loc) == true, 'checker-black': reversi.get(loc) == false }"
-      ></div>
+    <div class="scoreBoard"> 
+      <div class="score scoreWhite">
+        <div class="content"> 
+          {{ reversi.score["true"] }}
+        </div>
+      </div>
+      <div class="score scoreBlack">
+        <div class="content"> 
+          {{ reversi.score["false"] }}
+        </div>
+      </div>
     </div>
+    <div>
+      <div *ngFor="let player of [aiPlayer, aiPlayer2]">
+        <h3>AI Brain - {{ player.name }}</h3>
+        <div class="board ai-board">
+          <div class="row"
+              *ngFor="let rows of boardLocations">
+            <div class="cell" 
+                [ngStyle]="{'background-color': 'rgba(255, 0, 0, ' + (player.networkOutputs[loc.toString()] || 0) + ')'}"
+                *ngFor="let loc of rows; trackBy:trackByLocation">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resultModal"
+       [ngClass]="{show: modalVisible, hide: !modalVisible}">
+    <div class="modalContent">
+      <h1>Result</h1>
+      <div class="scoreBoard"> 
+        <div class="score scoreWhite">
+          <div class="content"> 
+            {{ reversi.score["true"] }}
+          </div>
+        </div>
+        <div class="score scoreBlack">
+          <div class="content"> 
+            {{ reversi.score["false"] }}
+          </div>
+        </div>
+      </div>
+      <p>
+        <br />
+        <a class="btn btn-primary btn-lg" (click)="onClickReplay()" role="button">Replay</a>
+      </p>
+    </div>       
   </div>
 </div>

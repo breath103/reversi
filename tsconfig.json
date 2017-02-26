@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "noEmit": true,
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "strictNullChecks": false,
     "lib": [
       "dom",
