@@ -57,8 +57,8 @@ export class ReversiComponent implements OnInit {
       await this.reversi.playerTrue.onGameFinished(this.reversi);
       await this.reversi.playerFalse.onGameFinished(this.reversi);
 
-      // this.resetGame();
-      this.showModal();
+      this.resetGame();
+      // this.showModal();
     }
   }
 

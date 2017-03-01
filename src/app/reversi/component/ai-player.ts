@@ -29,7 +29,7 @@ export class AIPlayer extends Player {
         } else {
           if (checker == undefined) {
             inputs.push(1);
-          } else if (checker == this.checker) {
+          } else if (checker == move.checker) {
             inputs.push(2);
           } else {
             inputs.push(3);
@@ -41,7 +41,7 @@ export class AIPlayer extends Player {
   }
 
   private get _localStorageKey() { 
-    return this.networkSignature.toString() + this.name + ".v2";
+    return this.networkSignature.toString() + this.name + ".v4";
   }
 
   public saveNetwork() {
@@ -64,7 +64,6 @@ export class AIPlayer extends Player {
     return await new Promise<Vector>((resolve, reject) => {
       // Among possibleMoves, find the highest score
       this.networkOutputs = {};
-
       const bestMove = _(reversi.possibleMoves).values<PossibleMove>()
                                                .maxBy(i => {
                                                   const predictedScore = this.network.activate(
@@ -72,36 +71,36 @@ export class AIPlayer extends Player {
                                                   )[0];
 
                                                   this.networkOutputs[i.move.vector.toString()] = predictedScore;
-
                                                   return predictedScore;
                                                });
-      console.log(this.networkOutputs);
+      const scores = _.values(this.networkOutputs);
+      const min = _.min(scores);
+      const max = _.max(scores); 
+      if (min != 0 && max != 0) {
+        this.networkOutputs = _.mapValues(this.networkOutputs, (score) => {
+          return (score - min) / (max - min);
+        }) as any;                                               
+      }
       setTimeout(() => {
         resolve(bestMove.move.vector);
-      }, 50);
+      }, 20);
     });
   }
 
   async onGameFinished(game: Reversi) {
-    let trainningOutput = 0;
-    console.log("game winner", game.winner);
     if (game.winner == this) {
-      // if i'm winner, train him to do those moves more
-      console.log("Winner");
-      trainningOutput = 1;
-    } else {
-      // if i'm not winner, train him to do those moves less
-      console.log("Looser");
-      trainningOutput = -1;
+      console.log("Winner : ", game.winner.name, game.score);
     }
-
-    console.log("Learning - ", this.name);
-
     game.moves.forEach(move => {
       // Retrospective my moves
       if (move.move.checker == this.checker) {
+        const trainningOutput = game.winner.checker == move.move.checker ? 1 : 0;
         this.network.activate(this._boardToNetworkInput(move.board, game.boardSize, move.move));
-        this.network.propagate(0.2, [trainningOutput]);
+        this.network.propagate(0.1, [trainningOutput]);
+      } else {
+        const trainningOutput = game.winner.checker == move.move.checker ? 1 : 0;
+        this.network.activate(this._boardToNetworkInput(move.board, game.boardSize, move.move));
+        this.network.propagate(0.1, [trainningOutput]);
       }
     });
 
